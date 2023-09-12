@@ -1,4 +1,5 @@
-run_command: "go run main.go"
+compile_command: go build
+run_command: ./simple-demo
 debug:
   support: true
   launch:
