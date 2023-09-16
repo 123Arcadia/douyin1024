@@ -1,9 +1,9 @@
-package service
+package messgage
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/RaymondCode/simple-demo/controller"
+	"github.com/123Arcadia/douyin1024CodeSpaceDemo.git/controller"
 	"io"
 	"net"
 	"sync"

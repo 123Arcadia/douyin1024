@@ -1,0 +1,14 @@
+# MySQL 配置
+mysql:
+  # 主机
+  ip: 127.0.0.1 # 172.22.160.1
+  # 端口
+  port: 3306
+  # 用户名（如 root）
+  username: root
+  # 密码
+  password: 123456
+  # 数据库名称
+  db: gindouyin
+# 服务端地址
+# config.go中有常量配置
