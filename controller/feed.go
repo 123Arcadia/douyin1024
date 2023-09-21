@@ -67,7 +67,7 @@ func LoginAccess(c *gin.Context, userId uint) {
 	feedVideoList := *VideoService.Feed(startTime)
 	lenFeedVideoList := len(feedVideoList)
 	if lenFeedVideoList <= 0 {
-		log.Fatalf("视频流为空 error_2")
+		log.Println("视频流为空 error_2")
 		// 意味着startTime参数没有填写，按默认time.now()来查找30个
 		response.GetFeedSuccess(c, time.Now().Unix(), []response.Video{})
 		return
@@ -110,7 +110,7 @@ func NoLoginAccess(c *gin.Context) {
 	feedVideoList := *VideoService.Feed(startTime)
 	lenFeedVideoList := len(feedVideoList)
 	if lenFeedVideoList <= 0 {
-		log.Fatalf("获取视频流错误! error_1")
+		log.Println("获取视频流错误! error_1")
 		// 意味着startTime参数没有填写，按默认time.now()来查找30个
 		response.GetFeedSuccess(c, time.Now().Unix(), []response.Video{})
 		return

@@ -18,7 +18,7 @@ type Video struct {
 
 type VideoList []Video
 
-// 视频流响应
+// FeedResponse 视频流响应
 type FeedResponse struct {
 	StatusCode int32   `json:"status_code"`          // 状态码，0-成功，其他值-失败
 	StatusMsg  string  `json:"status_msg"`           // 返回状态描述
@@ -60,7 +60,7 @@ func SaveVideoFileResponse(c *gin.Context, code int32, msg string) {
 	})
 }
 
-// 发布列表响应
+// VideoListResponse 发布列表响应
 type VideoListResponse struct {
 	StatusCode int32   `json:"status_code"`          // 状态码，0-成功，其他值-失败
 	StatusMsg  string  `json:"status_msg"`           // 返回状态描述

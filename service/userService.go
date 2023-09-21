@@ -18,13 +18,13 @@ func (s *UserService) Register(username string, password string) (models.User, e
 	var user models.User
 	err := conf.DB.Where("user_name = ?", username).First(&user).Error
 	if err == nil {
-		log.Fatalf("用户名已注册username = %v\n", username)
+		log.Printf("用户名已注册username = %+v\n", username)
 		return user, errors.New("用户名已注册")
 	}
 	// 加密password
 	encryptPassword, err := utils.EncryptPassword(password)
 	if err != nil {
-		log.Fatalf("用户密码不符username = %v, password = %v\n", username, password)
+		log.Printf("用户密码不符username = %+v, password = %+v\n", username, password)
 		return models.User{}, err
 	}
 
