@@ -4,6 +4,7 @@ import (
 	"github.com/123Arcadia/douyin1024CodeSpaceDemo.git/initConfig"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -18,10 +19,10 @@ const (
 	ISSUE            = "SimpleDouyin"
 	CheckFailed      = "校验失败"
 	ParseTokenFailed = "解析token失败"
-	GetTokenFailed   = "获取token失败"
+	//GetTokenFailed   = "获取token失败"
 )
 
-// MyClaims，定义 JWT 的声明
+// MyClaims 定义 JWT 的声明
 type MyClaims struct {
 	UserID   uint
 	Username string
@@ -29,7 +30,7 @@ type MyClaims struct {
 	jwt.RegisteredClaims
 }
 
-// 鉴权失败响应
+// AuthFailResponse 鉴权失败响应
 type AuthFailResponse struct {
 	StatusCode int64  `json:"status_code"` // 状态码，0-成功，其他值-失败
 	StatusMsg  string `json:"status_msg"`  // 返回状态描述
@@ -59,38 +60,38 @@ func GenerateToken(userId uint, username, password string) (string, error) {
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取token
-		tokenString := c.Query("token")
-		if len(tokenString) == 0 {
-			c.Set("userID", uint(0))
+		tokenString := strings.TrimSpace(c.Query("token"))
+		if tokenString == "" || len(tokenString) == 0 {
+			c.Set("user_id", uint(0))
 			c.Next()
 			return
 		}
-		// 解析 token
 		token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
 			return JwtKey, nil
 		})
 		if err != nil {
-			c.JSON(
-				http.StatusInternalServerError,
-				AuthFailResponse{
-					StatusCode: 1,
-					StatusMsg:  ParseTokenFailed,
-				},
-			)
+			c.JSON(http.StatusInternalServerError, AuthFailResponse{
+				StatusCode: 1,
+				StatusMsg:  ParseTokenFailed,
+			})
 			c.Abort()
 			return
 		}
-		// 校验鉴权的声明
+
 		if token != nil {
 			claims, ok := token.Claims.(*MyClaims)
 			if ok && token.Valid {
-				c.Set("userID", claims.UserID)
+				c.Set("user_id", claims.UserID) // 这里把user_id存储到上下文，后续通过Get("user_id")得到登录的用户id
 				c.Next()
 				return
 			}
 		}
-		c.JSON(http.StatusInternalServerError, AuthFailResponse{StatusCode: 1, StatusMsg: CheckFailed})
+		c.JSON(http.StatusInternalServerError, AuthFailResponse{
+			StatusCode: 1,
+			StatusMsg:  CheckFailed,
+		})
 		c.Abort()
+		return
 	}
 }
 
@@ -103,7 +104,7 @@ func UserPublishAuth() gin.HandlerFunc {
 		// 获取token
 		tokenString := c.PostForm("token")
 		if len(tokenString) == 0 {
-			c.Set("userID", uint(0))
+			c.Set("user_id", uint(0))
 			c.Next()
 			return
 		}
@@ -121,7 +122,7 @@ func UserPublishAuth() gin.HandlerFunc {
 		if token != nil {
 			claims, ok := token.Claims.(*MyClaims)
 			if ok && token.Valid {
-				c.Set("userID", claims.UserID)
+				c.Set("user_id", claims.UserID)
 				c.Next()
 				return
 			}

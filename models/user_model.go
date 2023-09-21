@@ -1,10 +1,5 @@
 package models
 
-import (
-	"github.com/123Arcadia/douyin1024CodeSpaceDemo.git/conf"
-	"github.com/gin-gonic/gin"
-)
-
 // 用户
 type User struct {
 	ID              uint   `gorm:"primarykey"`
@@ -21,13 +16,4 @@ type User struct {
 	// 定义外键关系
 	Video   []Video   `gorm:"foreignKey:UserId; references:ID; comment:视频信息"`
 	Comment []Comment `gorm:"foreignKey:UserId; references:ID; comment:评论信息"`
-}
-
-func GetUserInfo(c *gin.Context, userId int64) (User, error) {
-	var user User
-	err := conf.DB.Where("id = ?", userId).First(&user).Error
-	if err != nil {
-		return User{}, err
-	}
-	return user, nil
 }

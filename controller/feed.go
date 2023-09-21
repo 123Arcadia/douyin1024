@@ -15,18 +15,20 @@ import (
 	"time"
 )
 
-type FeedResponse struct {
-	Response
-	VideoList []Video `json:"video_list,omitempty"`
-	NextTime  int64   `json:"next_time,omitempty"`
-}
-
 var VideoService service.VideoService
+
+func Test(c *gin.Context) {
+	name := c.Query("name")
+	nameGet := c.GetString("name")
+	name3, _ := c.Get("name")
+	fmt.Println("name:", name, nameGet, name3)
+}
 
 // 不限制登录状态，返回按 投稿时间 倒序 的视频列表，视频数由服务端控制，单次最多30个
 // Feed same demo video list for every request
 func Feed(c *gin.Context) {
 	tokenString := c.Query("token")
+	//tokenString2 := c.GetString("token")
 	if len(tokenString) == 0 {
 		// 未登录
 		NoLoginAccess(c)
@@ -34,7 +36,7 @@ func Feed(c *gin.Context) {
 	}
 	// 鉴权
 	token, err := jwt.ParseWithClaims(tokenString, &middlewares.MyClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return initConfig.AUTH_KEY, nil
+		return middlewares.JwtKey, nil
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, middlewares.AuthFailResponse{
@@ -61,7 +63,7 @@ func Feed(c *gin.Context) {
 
 func LoginAccess(c *gin.Context, userId uint) {
 	//  需要返回的：最新投稿时间戳，不填表示当前时间
-	startTime := utils.GetFormatTime(c.Query("last_time"))
+	startTime := utils.GetFormatTime(c.Query("latest_time"))
 	feedVideoList := *VideoService.Feed(startTime)
 	lenFeedVideoList := len(feedVideoList)
 	if lenFeedVideoList <= 0 {
@@ -104,7 +106,7 @@ func LoginAccess(c *gin.Context, userId uint) {
 // 未登录自动推送视频
 func NoLoginAccess(c *gin.Context) {
 	//  需要返回的：最新投稿时间戳，不填表示当前时间
-	startTime := utils.GetFormatTime(c.Query("last_time"))
+	startTime := utils.GetFormatTime(c.Query("latest_time"))
 	feedVideoList := *VideoService.Feed(startTime)
 	lenFeedVideoList := len(feedVideoList)
 	if lenFeedVideoList <= 0 {

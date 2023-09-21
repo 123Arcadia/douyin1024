@@ -34,3 +34,43 @@ func GetFeedSuccess(c *gin.Context, lastTime int64, videoFeedList []Video) {
 		NextTime:   lastTime,
 	})
 }
+
+type PostVideoResponse struct {
+	StatusCode int32  `json:"status_code"`
+	StatusMsg  string `json:"status_msg"`
+}
+
+func VideoFileAccessErr(c *gin.Context, msg string) {
+	c.JSON(http.StatusInternalServerError, PostVideoResponse{
+		StatusCode: 1,
+		StatusMsg:  msg,
+	})
+}
+
+func SaveVideoFileResponse(c *gin.Context, code int32, msg string) {
+	var httpStat int
+	if code == 1 {
+		httpStat = 500
+	} else {
+		httpStat = 200
+	}
+	c.JSON(httpStat, PostVideoResponse{
+		StatusCode: code,
+		StatusMsg:  msg,
+	})
+}
+
+// 发布列表响应
+type VideoListResponse struct {
+	StatusCode int32   `json:"status_code"`          // 状态码，0-成功，其他值-失败
+	StatusMsg  string  `json:"status_msg"`           // 返回状态描述
+	VideoList  []Video `json:"video_list,omitempty"` // 用户发布的视频列表
+}
+
+// VideoIdConversionErr 视频id类型转换失败
+func VideoIdConversionErr(c *gin.Context) {
+	c.JSON(http.StatusBadRequest, PostVideoResponse{
+		StatusCode: 1,
+		StatusMsg:  "视频id类型转换失败",
+	})
+}

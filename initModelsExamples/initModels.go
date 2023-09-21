@@ -12,22 +12,22 @@ const TestUserPassword = "$2a$16$qOVr7vIeEZcah73BCpocV.Sq/m70sK4YusyEIU73TrvEj8Y
 // 样例
 const (
 	// 默认用户信息
-	UserDefault_avatar_url = initConfig.ScourceStaticPath + "/Initdata/public/avatar/default.png"
-	User1_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/1.png"
-	User2_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/2.png"
-	User3_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/3.png"
-	User4_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/4.png"
-	User5_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/5.png"
-	User6_avatar_url       = initConfig.ScourceStaticPath + "/Initdata/public/avatar/6.png"
+	UserDefault_avatar_url = initConfig.ScourceStaticPath + "/public/Initdata/avatar/default.png"
+	User1_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata/avatar/1.png"
+	User2_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata/avatar/2.png"
+	User3_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata//avatar/3.png"
+	User4_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata//avatar/4.png"
+	User5_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata//avatar/5.png"
+	User6_avatar_url       = initConfig.ScourceStaticPath + "/public/Initdata//avatar/6.png"
 
 	// 默认用户img地址
 	UserDefault_background_image_url = initConfig.ScourceStaticPath + "Initdata/background/default.png"
-	User1_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/1.png"
-	User2_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/2.png"
-	User3_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/3.png"
-	User4_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/4.png"
-	User5_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/5.png"
-	User6_background_image_url       = initConfig.ScourceStaticPath + "Initdata/background/6.png"
+	User1_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/1.png"
+	User2_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/2.png"
+	User3_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/3.png"
+	User4_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/4.png"
+	User5_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/5.png"
+	User6_background_image_url       = initConfig.ScourceStaticPath + "/Initdata/background/6.png"
 
 	//默认用户简介
 	UserDefault_profile_description = "这个人很懒，什么也没有留下......"
