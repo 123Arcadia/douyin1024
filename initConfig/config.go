@@ -2,7 +2,7 @@ package initConfig
 
 // 一些重要配置
 const (
-	Ipv4Address             = "自己的ipv4地址"
+	Ipv4Address             = "172.31.224.1"
 	ServerPort              = "8080"
 	ScourceStaticPath       = "http://" + Ipv4Address + ":" + ServerPort
 	ScourceStaticPublicPath = "http://" + Ipv4Address + ":" + ServerPort + "/public/"
